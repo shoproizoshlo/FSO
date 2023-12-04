@@ -13,16 +13,27 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
 
-  function getRandomArbitrary(min, max) {
+  const getRandomAnecdote = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-  }
+  };
+
+  const handleVotes = () => {
+    const votesCopy = [...votes];
+    votesCopy[selected] += 1;
+    setVotes(votesCopy);
+  };
 
   return (
     <>
-      <div>{anecdotes[selected]}</div>
+      <h1>Anegdote of the day</h1>
+      <p>{anecdotes[selected]}</p>
+      <p>This anecdote has: {votes[selected]} votes</p>
+
+      <button onClick={handleVotes}>vote</button>
       <button
-        onClick={() => setSelected(getRandomArbitrary(1, anecdotes.length))}
+        onClick={() => setSelected(getRandomAnecdote(1, anecdotes.length))}
       >
         next anecdote
       </button>
