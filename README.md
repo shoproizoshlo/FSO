@@ -8,6 +8,7 @@ This course serves as an introduction to modern web application development with
 
 - [Built with](#built-with)
 - [What I learned](#what-i-learned)
+- [Continued development](#continued-development)
 - [Useful resources](#useful-resources)
 - [Author](#author)
 
@@ -39,6 +40,10 @@ const proudOfThisFunc = () => {
 ```
 
 If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
+
+### Continued development
+
+- Part 1 courseinfo: should change props in components
 
 ### Useful resources
 
