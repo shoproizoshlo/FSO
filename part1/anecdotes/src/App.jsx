@@ -24,6 +24,7 @@ const App = () => {
     votesCopy[selected] += 1;
     setVotes(votesCopy);
   };
+  console.log(votes);
 
   return (
     <>
@@ -39,7 +40,7 @@ const App = () => {
       </button>
 
       <h2>anecdote with the most votes</h2>
-      <p>{anecdotes[Math.max(...votes)]}</p>
+      <p>{anecdotes[votes.indexOf(Math.max.apply(null, votes))]}</p>
       <p>This anecdote has: {[Math.max(...votes)]} votes</p>
     </>
   );
