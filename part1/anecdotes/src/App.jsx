@@ -1,6 +1,7 @@
 import { useState } from "react";
-import Button from "./Button";
+import Anecdote from "./Anecdote";
 import Votes from "./Votes";
+import Button from "./Button";
 
 const App = () => {
   const anecdotes = [
@@ -30,7 +31,7 @@ const App = () => {
   return (
     <>
       <h1>anecdote of the day</h1>
-      <p>{anecdotes[selected]}</p>
+      <Anecdote anecdote={anecdotes[selected]} />
       <Votes votesNumber={votes[selected]} />
       <Button onClick={handleVotes} text="vote" />
       <Button
@@ -39,7 +40,9 @@ const App = () => {
       />
 
       <h2>anecdote with the most votes</h2>
-      <p>{anecdotes[votes.indexOf(Math.max.apply(null, votes))]}</p>
+      <Anecdote
+        anecdote={anecdotes[votes.indexOf(Math.max.apply(null, votes))]}
+      />
       <Votes votesNumber={[Math.max(...votes)]} />
     </>
   );
