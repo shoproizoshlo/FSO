@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "./Button";
 
 const App = () => {
   const anecdotes = [
@@ -32,12 +33,11 @@ const App = () => {
       <p>{anecdotes[selected]}</p>
       <p>This anecdote has: {votes[selected]} votes</p>
 
-      <button onClick={handleVotes}>vote</button>
-      <button
+      <Button onClick={handleVotes} text="vote" />
+      <Button
         onClick={() => setSelected(getRandomAnecdote(1, anecdotes.length))}
-      >
-        next anecdote
-      </button>
+        text="next anecdote"
+      />
 
       <h2>anecdote with the most votes</h2>
       <p>{anecdotes[votes.indexOf(Math.max.apply(null, votes))]}</p>
