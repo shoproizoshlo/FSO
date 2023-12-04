@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Statistics from "./Statistics";
+import Button from "./Button";
 
 const App = () => {
   // save clicks of each button to its own state
@@ -17,13 +18,12 @@ const App = () => {
     setBad(bad + 1);
   };
 
-  
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={increaseByOne}>good</button>
-      <button onClick={setToZero}>neutral</button>
-      <button onClick={decreaseByOne}>bad</button>
+      <Button onClick={increaseByOne} text={"good"} />
+      <Button onClick={setToZero} text={"neutral"} />
+      <Button onClick={decreaseByOne} text={"bad"} />
 
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
