@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <>
-      <h1>Anegdote of the day</h1>
+      <h1>anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>This anecdote has: {votes[selected]} votes</p>
 
@@ -37,6 +37,10 @@ const App = () => {
       >
         next anecdote
       </button>
+
+      <h2>anecdote with the most votes</h2>
+      <p>{anecdotes[Math.max(...votes)]}</p>
+      <p>This anecdote has: {[Math.max(...votes)]} votes</p>
     </>
   );
 };
