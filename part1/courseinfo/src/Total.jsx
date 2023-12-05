@@ -1,10 +1,15 @@
 const Total = ({ parts }) => {
+  const array = parts.map((part) => part.exercises);
+  function reducer(accumulator, currentValue, index) {
+    const returns = accumulator + currentValue;
+    return returns;
+  }
+
+  array.reduce(reducer);
+
   return (
     <>
-      <p>
-        Number of exercises{" "}
-        {parts[0].exercises + parts[1].exercises + parts[2].exercises}
-      </p>
+      <p>Number of exercises {array.reduce(reducer)}</p>
     </>
   );
 };

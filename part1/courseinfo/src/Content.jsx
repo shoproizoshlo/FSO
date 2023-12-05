@@ -1,7 +1,6 @@
 import Part from "./Part";
 
 const Content = ({ parts }) => {
-  console.log("content parts", parts);
   return (
     <>
       {parts.map((part, key) => (
