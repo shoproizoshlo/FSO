@@ -4,7 +4,9 @@ const Total = ({ parts }) => {
 
   return (
     <>
-      <p>Number of exercises {array.reduce(reducer)}</p>
+      <p>
+        <strong>Number of exercises {array.reduce(reducer)}</strong>
+      </p>
     </>
   );
 };
