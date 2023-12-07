@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FindName from "./FindName";
+import AddNewNumber from "./AddNewNumber";
 import Heading from "./Heading";
 import InputField from "./InputField";
 import NumbersList from "./NumbersList";
@@ -60,7 +61,14 @@ const App = () => {
     <div>
       <FindName value={searchName} onChange={handleSearchChange} />
 
-      <Heading text="Add new number" />
+      <AddNewNumber
+        onSubmit={handleSubmit}
+        valueName={newName}
+        onChangeName={handleNameChange}
+        valueNumber={newNumber}
+        onChangeNumber={handleNumberChange}
+      />
+
       <form onSubmit={handleSubmit}>
         <div>
           <InputField
