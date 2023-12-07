@@ -2,9 +2,6 @@ import { useState } from "react";
 import FindName from "./FindName";
 import AddNewNumber from "./AddNewNumber";
 import Numbers from "./Numbers";
-import Heading from "./Heading";
-import InputField from "./InputField";
-import NumbersList from "./NumbersList";
 
 const App = () => {
   const [persons, setPersons] = useState([
