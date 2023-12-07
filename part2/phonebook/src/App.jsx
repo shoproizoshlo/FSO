@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FindName from "./FindName";
 import AddNewNumber from "./AddNewNumber";
+import Numbers from "./Numbers";
 import Heading from "./Heading";
 import InputField from "./InputField";
 import NumbersList from "./NumbersList";
@@ -69,17 +70,13 @@ const App = () => {
         onChangeNumber={handleNumberChange}
       />
 
-      
-      <Heading text="Numbers" />
-      <ul>
-        <NumbersList
-          list={numberToShow.map((person) => (
-            <li key={person.name}>
-              {person.name} {person.number}
-            </li>
-          ))}
-        />
-      </ul>
+      <Numbers
+        list={numberToShow.map((person) => (
+          <li key={person.name}>
+            {person.name} {person.number}
+          </li>
+        ))}
+      />
     </div>
   );
 };
