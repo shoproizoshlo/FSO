@@ -1,4 +1,5 @@
 import { useState } from "react";
+import FindName from "./FindName";
 import Heading from "./Heading";
 import InputField from "./InputField";
 import NumbersList from "./NumbersList";
@@ -57,13 +58,8 @@ const App = () => {
 
   return (
     <div>
-      <Heading text="Phonebook" />
-      <InputField
-        id="search"
-        labelText="find name:"
-        value={searchName}
-        onChange={handleSearchChange}
-      />
+      <FindName value={searchName} onChange={handleSearchChange} />
+
       <Heading text="Add new number" />
       <form onSubmit={handleSubmit}>
         <div>
