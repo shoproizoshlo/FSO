@@ -19,16 +19,14 @@ const App = () => {
     setNewNumber(e.target.value);
   };
   const handleSearchChange = (e) => {
-    setSearchName(e.target.value);
-    console.log(e.target.value);
-    setShowAll(!showAll);
-    console.log(showAll);
+    setSearchName(e.target.value.toLowerCase());
+    setShowAll(!e.target.value.toLowerCase());
   };
 
   const numberToShow = showAll
     ? persons
-    : persons.filter(
-        (person) => person.name.toLowerCase() === searchName.toLowerCase()
+    : persons.filter((person) =>
+        person.name.toLowerCase().startsWith(searchName)
       );
 
   const handleSubmit = (e) => {
