@@ -9,6 +9,8 @@ const App = () => {
   ]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [searchName, setSearchName] = useState("");
+  const [showAll, setShowAll] = useState(true);
 
   const handleNameChange = (e) => {
     setNewName(e.target.value);
@@ -16,6 +18,18 @@ const App = () => {
   const handleNumberChange = (e) => {
     setNewNumber(e.target.value);
   };
+  const handleSearchChange = (e) => {
+    setSearchName(e.target.value);
+    console.log(e.target.value);
+    setShowAll(!showAll);
+    console.log(showAll);
+  };
+
+  const numberToShow = showAll
+    ? persons
+    : persons.filter(
+        (person) => person.name.toLowerCase() === searchName.toLowerCase()
+      );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +57,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-
+      find name: <input value={searchName} onChange={handleSearchChange} />
       <h2>Add new number</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -58,7 +72,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map((person) => (
+        {numberToShow.map((person) => (
           <li key={person.name}>
             {person.name} {person.number}
           </li>
