@@ -66,10 +66,20 @@ const App = () => {
       <Heading text="Add new number" />
       <form onSubmit={handleSubmit}>
         <div>
-          name: <input value={newName} onChange={handleNameChange} />
+          <InputField
+            id="name"
+            labelText="name:"
+            value={newName}
+            onChange={handleNameChange}
+          />
         </div>
         <div>
-          number: <input value={newNumber} onChange={handleNumberChange} />
+          <InputField
+            id="name"
+            labelText="number:"
+            value={newNumber}
+            onChange={handleNumberChange}
+          />
         </div>
         <div>
           <button type="submit">add</button>
