@@ -15,7 +15,7 @@ const App = () => {
       id: persons.length + 1,
     };
 
-    persons.map((person) => person.name === e.target.name)
+    persons.map((person) => person.name === newName)
       ? alert(`${newName} is already added to phonebook`)
       : setPersons(persons.concat(nameObject));
 
