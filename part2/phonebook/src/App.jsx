@@ -8,20 +8,31 @@ const App = () => {
     setNewName(e.target.value);
   };
 
-  const addNewName = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const nameObject = {
       name: newName,
       id: persons.length + 1,
     };
 
-    setPersons(persons.concat(nameObject));
+    persons.map((person) => person.name === e.target.name)
+      ? alert(`${newName} is already added to phonebook`)
+      : setPersons(persons.concat(nameObject));
+
     setNewName("");
   };
+
+  // console.log(
+  //   "array of persons",
+  //   persons
+  //     .map((person) => person.name)
+  //     .forEach((element) => console.log("name of person", element))
+  // );
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addNewName}>
+      <form onSubmit={handleSubmit}>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
         </div>
