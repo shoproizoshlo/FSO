@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Heading from "./Heading";
 import InputField from "./InputField";
+import NumbersList from "./NumbersList";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -87,11 +88,13 @@ const App = () => {
       </form>
       <Heading text="Numbers" />
       <ul>
-        {numberToShow.map((person) => (
-          <li key={person.name}>
-            {person.name} {person.number}
-          </li>
-        ))}
+        <NumbersList
+          list={numberToShow.map((person) => (
+            <li key={person.name}>
+              {person.name} {person.number}
+            </li>
+          ))}
+        />
       </ul>
     </div>
   );
