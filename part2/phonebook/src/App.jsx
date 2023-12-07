@@ -6,12 +6,17 @@ const App = () => {
 
   const handleNameChange = (e) => {
     setNewName(e.target.value);
-    console.log(newName);
   };
 
   const addNewName = (e) => {
     e.preventDefault();
-    setPersons(newName);
+    const nameObject = {
+      name: newName,
+      id: persons.length + 1,
+    };
+
+    setPersons(persons.concat(nameObject));
+    setNewName("");
   };
   return (
     <div>
@@ -25,6 +30,11 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
+      <ul>
+        {persons.map((person) => (
+          <li key={person.name}>{person.name}</li>
+        ))}
+      </ul>
     </div>
   );
 };
