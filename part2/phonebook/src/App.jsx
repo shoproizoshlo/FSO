@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Heading from "./Heading";
+import InputField from "./InputField";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -54,9 +56,14 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      find name: <input value={searchName} onChange={handleSearchChange} />
-      <h2>Add new number</h2>
+      <Heading text="Phonebook" />
+      <InputField
+        id="search"
+        labelText="find name:"
+        value={searchName}
+        onChange={handleSearchChange}
+      />
+      <Heading text="Add new number" />
       <form onSubmit={handleSubmit}>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
@@ -68,7 +75,7 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
-      <h2>Numbers</h2>
+      <Heading text="Numbers" />
       <ul>
         {numberToShow.map((person) => (
           <li key={person.name}>
