@@ -69,27 +69,7 @@ const App = () => {
         onChangeNumber={handleNumberChange}
       />
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <InputField
-            id="name"
-            labelText="name:"
-            value={newName}
-            onChange={handleNameChange}
-          />
-        </div>
-        <div>
-          <InputField
-            id="name"
-            labelText="number:"
-            value={newNumber}
-            onChange={handleNumberChange}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      
       <Heading text="Numbers" />
       <ul>
         <NumbersList
