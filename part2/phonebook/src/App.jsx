@@ -20,11 +20,15 @@ const App = () => {
       id: persons.length + 1,
     };
 
-    persons.map((person) => person.name === newName)
-      ? alert(`${newName} is already added to phonebook`)
-      : setPersons(persons.concat(nameObject));
-
+    if (persons.some((person) => person.name === newName)) {
+      alert(`${newName} is already added to phonebook`);
+    } else {
+      setPersons(persons.concat(nameObject));
+      setNewName("");
+      setNewNumber("");
+    }
     setNewName("");
+    setNewNumber("");
   };
 
   return (
