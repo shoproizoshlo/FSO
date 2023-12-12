@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import FindName from "./FindName";
 import AddNewNumber from "./AddNewNumber";
 import Numbers from "./Numbers";
 
 const App = () => {
+  useEffect(() => {
+    console.log("effect");
+    axios.get("http://localhost:3001/persons").then((response) => {
+      console.log("promise fulfilled");
+      setNotes(response.data);
+    });
+  }, []);
+  console.log("render", notes.length, "notes");
+
   const [persons, setPersons] = useState([
     { name: "Arto Hellas", number: "040-123456", id: 1 },
     { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
