@@ -12,15 +12,6 @@ const App = () => {
   const [searchName, setSearchName] = useState("");
   const [showAll, setShowAll] = useState(true);
 
-  // useEffect(() => {
-  //   console.log("effect");
-  //   axios.get("http://localhost:3001/persons").then((response) => {
-  //     console.log("promise fulfilled");
-  //     setPersons(response.data);
-  //   });
-  // }, []);
-  // console.log("render", persons.length, "persons");
-
   useEffect(() => {
     personService.getAll().then((initialPersons) => {
       setPersons(initialPersons);
@@ -46,6 +37,7 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const nameObject = {
       name: newName,
       number: newNumber,
