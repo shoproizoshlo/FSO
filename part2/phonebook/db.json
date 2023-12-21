@@ -2,7 +2,7 @@
   "persons": [
     {
       "name": "Arto Hellas",
-      "number": "040-123456",
+      "number": "9876543",
       "id": 1
     },
     {
@@ -12,33 +12,13 @@
     },
     {
       "name": "Dan Abramov",
-      "number": "12-43-234345",
+      "number": "34908234",
       "id": 3
     },
     {
       "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
+      "number": "1234567",
       "id": 4
-    },
-    {
-      "name": "Arto Hellas",
-      "number": "24234324",
-      "id": 5
-    },
-    {
-      "name": "Arto Hellas",
-      "number": "2904823094",
-      "id": 6
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "892374",
-      "id": 7
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "79887908",
-      "id": 8
     }
   ]
 }

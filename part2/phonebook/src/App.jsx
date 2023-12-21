@@ -13,9 +13,14 @@ const App = () => {
   const [showAll, setShowAll] = useState(true);
 
   useEffect(() => {
-    personService.getAll().then((initialPersons) => {
-      setPersons(initialPersons);
-    });
+    personService
+      .getAll()
+      .then((initialPersons) => {
+        setPersons(initialPersons);
+      })
+      .catch((error) => {
+        console.error("Error getting person:", error);
+      });
   }, []);
 
   const handleNameChange = (e) => {
@@ -44,23 +49,42 @@ const App = () => {
       id: persons.length + 1,
     };
 
-    personService.create(nameObject).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson));
-      setNewName("");
-      setNewNumber("");
-    });
+    personService
+      .create(nameObject)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNewNumber("");
+      })
+      .catch((error) => {
+        console.error("Error creating person:", error);
+      });
 
-    if (
-      persons.some(
-        (person) => person.name.toLowerCase() === newName.toLowerCase()
-      )
-    ) {
+    const existingPerson = persons.find(
+      (person) => person.name.toLowerCase() === newName.toLowerCase()
+    );
+    if (existingPerson) {
       if (
         window.confirm(
-          `${newName} is already added to phonebook. Do you want to update number?`
+          `${existingPerson.name} is already added to phonebook. Do you want to update number?`
         )
       ) {
         console.log("done");
+        const url = `http://localhost:3001/notes/${existingPerson.id}`;
+        const person = persons.find((p) => p.id === existingPerson.id);
+        const changedPerson = { ...person, number: newNumber };
+        personService
+          .update(existingPerson.id, changedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== existingPerson.id ? person : returnedPerson
+              )
+            );
+          })
+          .catch((error) => {
+            console.error("Error updating person:", error);
+          });
       } else {
         setPersons(persons.concat(nameObject));
       }
