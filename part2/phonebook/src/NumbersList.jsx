@@ -1,9 +1,5 @@
 const NumbersList = ({ list }) => {
-  return (
-    <>
-      <ul>{list}</ul>
-    </>
-  );
+  return <>{list}</>;
 };
 
 export default NumbersList;
