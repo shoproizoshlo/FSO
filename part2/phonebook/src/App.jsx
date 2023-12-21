@@ -74,6 +74,23 @@ const App = () => {
     setNewNumber("");
   };
 
+  const handleDeletePerson = (person) => {
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService
+        .deletePerson(person.id)
+        .then(() => {
+          setPersons((prevPersons) =>
+            prevPersons.filter(
+              (currentPerson) => currentPerson.id !== person.id
+            )
+          );
+        })
+        .catch((err) => {
+          console.error("Error deleting person:", err);
+        });
+    }
+  };
+
   return (
     <div>
       <FindName value={searchName} onChange={handleSearchChange} />
@@ -90,21 +107,7 @@ const App = () => {
         list={numberToShow.map((person) => (
           <li key={person.id}>
             {person.name} {person.number}
-            <button
-              onClick={(e) => {
-                e.preventDefault;
-                if (window.confirm(`Delete ${person.name}?`)) {
-                  personService
-                    .deletePerson(person.id)
-                    .then(() => {})
-                    .catch((err) => {
-                      console.error("Error deleting person:", err);
-                    });
-                }
-              }}
-            >
-              delete
-            </button>
+            <button onClick={() => handleDeletePerson(person)}>delete</button>
           </li>
         ))}
       />
