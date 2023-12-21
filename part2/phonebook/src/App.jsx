@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import numberService from "./services/number";
+import personService from "./services/persons";
 import FindName from "./FindName";
 import AddNewNumber from "./AddNewNumber";
 import Numbers from "./Numbers";
@@ -22,9 +22,8 @@ const App = () => {
   // console.log("render", persons.length, "persons");
 
   useEffect(() => {
-    numberService.getAll().then((response) => {
-      console.log("promise fulfilled");
-      setPersons(response.data);
+    personService.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
     });
   }, []);
 
@@ -50,7 +49,7 @@ const App = () => {
     const nameObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
+      name: persons.length + 1,
     };
 
     if (
