@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import numberService from "./services/number";
 import FindName from "./FindName";
 import AddNewNumber from "./AddNewNumber";
 import Numbers from "./Numbers";
@@ -11,14 +12,21 @@ const App = () => {
   const [searchName, setSearchName] = useState("");
   const [showAll, setShowAll] = useState(true);
 
+  // useEffect(() => {
+  //   console.log("effect");
+  //   axios.get("http://localhost:3001/persons").then((response) => {
+  //     console.log("promise fulfilled");
+  //     setPersons(response.data);
+  //   });
+  // }, []);
+  // console.log("render", persons.length, "persons");
+
   useEffect(() => {
-    console.log("effect");
-    axios.get("http://localhost:3001/persons").then((response) => {
+    numberService.getAll().then((response) => {
       console.log("promise fulfilled");
       setPersons(response.data);
     });
   }, []);
-  console.log("render", persons.length, "persons");
 
   const handleNameChange = (e) => {
     setNewName(e.target.value);
