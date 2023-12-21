@@ -53,7 +53,6 @@ const App = () => {
     };
 
     personService.create(nameObject).then((returnedPerson) => {
-      console.log(returnedPerson.name);
       setPersons(persons.concat(returnedPerson));
       setNewName("");
       setNewNumber("");
@@ -64,12 +63,17 @@ const App = () => {
         (person) => person.name.toLowerCase() === newName.toLowerCase()
       )
     ) {
-      alert(`${newName} is already added to phonebook`);
-    } else {
-      setPersons(persons.concat(nameObject));
-      setNewName("");
-      setNewNumber("");
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook. Do you want to update number?`
+        )
+      ) {
+        console.log("done");
+      } else {
+        setPersons(persons.concat(nameObject));
+      }
     }
+
     setNewName("");
     setNewNumber("");
   };
