@@ -49,8 +49,15 @@ const App = () => {
     const nameObject = {
       name: newName,
       number: newNumber,
-      name: persons.length + 1,
+      id: persons.length + 1,
     };
+
+    personService.create(nameObject).then((returnedPerson) => {
+      console.log(returnedPerson.name);
+      setPersons(persons.concat(returnedPerson));
+      setNewName("");
+      setNewNumber("");
+    });
 
     if (
       persons.some(
@@ -81,7 +88,7 @@ const App = () => {
 
       <Numbers
         list={numberToShow.map((person) => (
-          <li key={person.name}>
+          <li key={person.id}>
             {person.name} {person.number}
           </li>
         ))}
