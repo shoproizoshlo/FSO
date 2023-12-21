@@ -74,6 +74,8 @@ const App = () => {
     setNewNumber("");
   };
 
+  const deleteNumber = (e) => e.preventDefault;
+
   return (
     <div>
       <FindName value={searchName} onChange={handleSearchChange} />
@@ -90,6 +92,7 @@ const App = () => {
         list={numberToShow.map((person) => (
           <li key={person.id}>
             {person.name} {person.number}
+            <button onClick={deleteNumber}>delete</button>
           </li>
         ))}
       />
