@@ -56,6 +56,10 @@ const App = () => {
       .create(nameObject)
       .then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
+        setErrorMessage(`${returnedPerson.name} created`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
         setNewName("");
         setNewNumber("");
       })
@@ -111,6 +115,10 @@ const App = () => {
               (currentPerson) => currentPerson.id !== person.id
             )
           );
+          setErrorMessage(`${person.name} deleted`);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
         })
         .catch((err) => {
           console.error("Error deleting person:", err);
