@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import personService from "./services/persons";
+import Heading from "./Heading";
 import FindName from "./FindName";
 import AddNewNumber from "./AddNewNumber";
 import Numbers from "./Numbers";
+import Notification from "./Notification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,6 +13,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [searchName, setSearchName] = useState("");
   const [showAll, setShowAll] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("some error happened...");
 
   useEffect(() => {
     personService
@@ -81,6 +84,10 @@ const App = () => {
                 person.id !== existingPerson.id ? person : returnedPerson
               )
             );
+            setErrorMessage(`${person.name} was changed`);
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
           })
           .catch((error) => {
             console.error("Error updating person:", error);
@@ -113,6 +120,9 @@ const App = () => {
 
   return (
     <div>
+      <Heading text="Phonebook" />
+      <Notification message={errorMessage} />
+
       <FindName value={searchName} onChange={handleSearchChange} />
 
       <AddNewNumber
