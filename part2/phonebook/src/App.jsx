@@ -129,6 +129,7 @@ const App = () => {
   return (
     <div>
       <Heading text="Phonebook" />
+
       <Notification message={errorMessage} />
 
       <FindName value={searchName} onChange={handleSearchChange} />
