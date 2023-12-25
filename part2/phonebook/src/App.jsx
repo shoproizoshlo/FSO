@@ -14,6 +14,7 @@ const App = () => {
   const [searchName, setSearchName] = useState("");
   const [showAll, setShowAll] = useState(true);
   const [errorMessage, setErrorMessage] = useState("some error happened...");
+  const [errorStatus, setErrorStatus] = useState(false);
 
   useEffect(() => {
     personService
@@ -23,6 +24,7 @@ const App = () => {
       })
       .catch((error) => {
         setErrorMessage(`Error getting person ${initialPersons.name}`);
+        setErrorStatus(true);
         setTimeout(() => {
           setErrorMessage(null);
         }, 5000);
@@ -68,6 +70,7 @@ const App = () => {
       })
       .catch((error) => {
         setErrorMessage(`Error creating person ${returnedPerson.name}`);
+        setErrorStatus(true);
         setTimeout(() => {
           setErrorMessage(null);
         }, 5000);
@@ -100,6 +103,7 @@ const App = () => {
           })
           .catch((error) => {
             setErrorMessage(`${person.name} was already deleted from server`);
+            setErrorStatus(true);
             setTimeout(() => {
               setErrorMessage(null);
             }, 5000);
@@ -133,6 +137,7 @@ const App = () => {
         })
         .catch((err) => {
           setErrorMessage(`${person.name} was already deleted from server`);
+          setErrorStatus(true);
           setTimeout(() => {
             setErrorMessage(null);
           }, 5000);
@@ -144,7 +149,7 @@ const App = () => {
     <div>
       <Heading text="Phonebook" />
 
-      <Notification message={errorMessage} />
+      <Notification message={errorMessage} errorStatus={errorStatus} />
 
       <FindName value={searchName} onChange={handleSearchChange} />
 
