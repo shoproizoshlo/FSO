@@ -22,7 +22,10 @@ const App = () => {
         setPersons(initialPersons);
       })
       .catch((error) => {
-        console.error("Error getting person:", error);
+        setErrorMessage(`Error getting person ${initialPersons.name}`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
       });
   }, []);
 
@@ -64,7 +67,10 @@ const App = () => {
         setNewNumber("");
       })
       .catch((error) => {
-        console.error("Error creating person:", error);
+        setErrorMessage(`Error creating person ${returnedPerson.name}`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
       });
 
     const existingPerson = persons.find(
@@ -76,7 +82,6 @@ const App = () => {
           `${existingPerson.name} is already added to phonebook. Do you want to update number?`
         )
       ) {
-        console.log("done");
         const url = `http://localhost:3001/notes/${existingPerson.id}`;
         const person = persons.find((p) => p.id === existingPerson.id);
         const changedPerson = { ...person, number: newNumber };
@@ -94,7 +99,13 @@ const App = () => {
             }, 5000);
           })
           .catch((error) => {
-            console.error("Error updating person:", error);
+            setErrorMessage(`${person.name} was already deleted from server`);
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
+            setPersons(
+              persons.filter((person) => person.id !== existingPerson.id)
+            );
           });
       } else {
         setPersons(persons.concat(nameObject));
@@ -121,7 +132,10 @@ const App = () => {
           }, 5000);
         })
         .catch((err) => {
-          console.error("Error deleting person:", err);
+          setErrorMessage(`${person.name} was already deleted from server`);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
         });
     }
   };
