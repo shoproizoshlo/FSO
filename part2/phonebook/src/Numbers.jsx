@@ -1,12 +1,17 @@
 import Heading from "./Heading";
 import NumbersList from "./NumbersList";
-const Numbers = ({ list }) => {
+const Numbers = ({ persons, removePerson }) => {
   return (
     <>
       <Heading text="Numbers" />
-      <ul>
-        <NumbersList list={list} />
-      </ul>
+      <div>
+        {persons.map((person) => (
+          <p key={person.id}>
+            {person.name} {person.number}
+            <button onClick={() => removePerson(person)}>delete</button>
+          </p>
+        ))}
+      </div>
     </>
   );
 };

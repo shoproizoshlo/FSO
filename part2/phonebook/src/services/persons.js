@@ -15,7 +15,6 @@ const update = (id, newObject) => {
     .then((response) => response.data);
 };
 
-// use some other name for variable!
 const deletePerson = (id) => {
   return axios.delete(`${baseUrl}/${id}`).then((response) => response.data);
 };

@@ -10,10 +10,8 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
-  const [searchName, setSearchName] = useState("");
-  const [showAll, setShowAll] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("some error happened...");
-  const [errorStatus, setErrorStatus] = useState(false);
+  const [filter, setFilter] = useState("");
+  const [info, setInfo] = useState({ message: null });
 
   useEffect(() => {
     personService
@@ -30,144 +28,101 @@ const App = () => {
       });
   }, []);
 
-  const handleNameChange = (e) => {
-    setNewName(e.target.value);
+  const notifyWith = (message, type = "info") => {
+    setInfo({
+      message,
+      type,
+    });
+
+    setTimeout(() => {
+      setInfo({ message: null });
+    }, 3000);
   };
-  const handleNumberChange = (e) => {
-    setNewNumber(e.target.value);
-  };
-  const handleSearchChange = (e) => {
-    setSearchName(e.target.value.toLowerCase());
-    setShowAll(!e.target.value.toLowerCase());
-  };
 
-  const numberToShow = showAll
-    ? persons
-    : persons.filter((person) =>
-        person.name.toLowerCase().startsWith(searchName)
-      );
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const nameObject = {
-      name: newName,
-      number: newNumber,
-      id: persons.length + 1,
-    };
-
-    personService
-      .create(nameObject)
-      .then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
-        setErrorMessage(`${returnedPerson.name} created`);
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 5000);
-        setNewName("");
-        setNewNumber("");
-      })
-      .catch((error) => {
-        setErrorMessage(`Error creating person ${returnedPerson.name}`);
-        setErrorStatus(true);
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 5000);
-      });
-
-    const existingPerson = persons.find(
-      (person) => person.name.toLowerCase() === newName.toLowerCase()
-    );
-    if (existingPerson) {
-      if (
-        window.confirm(
-          `${existingPerson.name} is already added to phonebook. Do you want to update number?`
-        )
-      ) {
-        const url = `http://localhost:3001/notes/${existingPerson.id}`;
-        const person = persons.find((p) => p.id === existingPerson.id);
-        const changedPerson = { ...person, number: newNumber };
-        personService
-          .update(existingPerson.id, changedPerson)
-          .then((returnedPerson) => {
-            setPersons(
-              persons.map((person) =>
-                person.id !== existingPerson.id ? person : returnedPerson
-              )
-            );
-            setErrorMessage(`${person.name} was changed`);
-            setTimeout(() => {
-              setErrorMessage(null);
-            }, 5000);
-          })
-          .catch((error) => {
-            setErrorMessage(`${person.name} was already deleted from server`);
-            setErrorStatus(true);
-            setTimeout(() => {
-              setErrorMessage(null);
-            }, 5000);
-            setPersons(
-              persons.filter((person) => person.id !== existingPerson.id)
-            );
-          });
-      } else {
-        setPersons(persons.concat(nameObject));
-      }
-    }
-
+  const cleanForm = () => {
     setNewName("");
     setNewNumber("");
   };
 
-  const handleDeletePerson = (person) => {
-    if (window.confirm(`Delete ${person.name}?`)) {
+  const updatePerson = (person) => {
+    if (
+      window.confirm(
+        `${newName} is already added to phoneebook. Do you want to update number?`
+      )
+    ) {
       personService
-        .deletePerson(person.id)
-        .then(() => {
-          setPersons((prevPersons) =>
-            prevPersons.filter(
-              (currentPerson) => currentPerson.id !== person.id
-            )
+        .update(person.id, { ...person, number: newNumber })
+        .then((updatedPerson) => {
+          setPersons(
+            persons.map((p) => (p.id !== person.id ? p : updatedPerson))
           );
-          setErrorMessage(`${person.name} deleted`);
-          setTimeout(() => {
-            setErrorMessage(null);
-          }, 5000);
+
+          notifyWith(`phone number of ${person.name} updated!`);
         })
-        .catch((err) => {
-          setErrorMessage(`${person.name} was already deleted from server`);
-          setErrorStatus(true);
-          setTimeout(() => {
-            setErrorMessage(null);
-          }, 5000);
+        .catch((error) => {
+          notifyWith(`phone number of ${person.name} updated!`);
+          console.log(info.message);
+
+          setPersons(persons.filter((p) => p.id !== person.id));
         });
+
+      cleanForm();
     }
   };
 
+  const addPerson = (e) => {
+    e.preventDefault();
+
+    const person = persons.find((p) => p.name === newName);
+
+    if (person) {
+      updatePerson(person);
+      return;
+    }
+
+    personService
+      .create({ name: newName, number: newNumber })
+      .then((createdPerson) => {
+        setPersons(persons.concat(createdPerson));
+
+        notifyWith(`${createdPerson.name} added!`);
+
+        cleanForm();
+      });
+  };
+
+  const removePerson = (person) => {
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService.deletePerson(person.id).then(() => {
+        setPersons(persons.filter((p) => p.id !== person.id));
+
+        notifyWith(`number of ${person.name} deleted!`);
+      });
+    }
+  };
+
+  const byFilterField = (p) =>
+    p.name.toLowerCase().includes(filter.toLowerCase());
+
+  const personsToShow = filter ? persons.filter(byFilterField) : persons;
+
   return (
     <div>
-      <Heading text="Phonebook" />
+      <Heading text="phoneebook" />
 
-      <Notification message={errorMessage} errorStatus={errorStatus} />
+      <Notification info={info} />
 
-      <FindName value={searchName} onChange={handleSearchChange} />
+      <FindName filter={filter} setFilter={setFilter} />
 
       <AddNewNumber
-        onSubmit={handleSubmit}
-        valueName={newName}
-        onChangeName={handleNameChange}
-        valueNumber={newNumber}
-        onChangeNumber={handleNumberChange}
+        addPerson={addPerson}
+        newName={newName}
+        newNumber={newNumber}
+        setNewName={setNewName}
+        setNewNumber={setNewNumber}
       />
 
-      <Numbers
-        list={numberToShow.map((person) => (
-          <li key={person.id}>
-            {person.name} {person.number}
-            <button onClick={() => handleDeletePerson(person)}>delete</button>
-          </li>
-        ))}
-      />
+      <Numbers persons={personsToShow} removePerson={removePerson} />
     </div>
   );
 };

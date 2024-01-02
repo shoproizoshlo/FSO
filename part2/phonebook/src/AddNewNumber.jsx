@@ -1,23 +1,34 @@
 import Heading from "./Heading";
-import AddNumberForm from "./AddNumberForm";
 
 const AddNewNumber = ({
-  onSubmit,
-  valueName,
-  onChangeName,
-  valueNumber,
-  onChangeNumber,
+  addPerson,
+  newName,
+  newNumber,
+  setNewName,
+  setNewNumber,
 }) => {
   return (
     <>
       <Heading text="Add new number" />
-      <AddNumberForm
-        onSubmit={onSubmit}
-        valueName={valueName}
-        onChangeName={onChangeName}
-        valueNumber={valueNumber}
-        onChangeNumber={onChangeNumber}
-      />
+      <form onSubmit={addPerson}>
+        <div>
+          name:
+          <input
+            value={newName}
+            onChange={({ target }) => setNewName(target.value)}
+          />
+        </div>
+        <div>
+          number:
+          <input
+            value={newNumber}
+            onChange={({ target }) => setNewNumber(target.value)}
+          />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
     </>
   );
 };

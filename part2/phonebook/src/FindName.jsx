@@ -1,13 +1,11 @@
-import InputField from "./InputField";
-
-const FindName = ({ value, onChange }) => {
+const FindName = ({ filter, setFilter }) => {
   return (
     <>
-      <InputField
-        id="search"
-        labelText="find name:"
-        value={value}
-        onChange={onChange}
+      <label htmlFor="input">filter shown with</label>
+      <input
+        id="input"
+        value={filter}
+        onChange={({ target }) => setFilter(target.value)}
       />
     </>
   );
